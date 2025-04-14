@@ -1,4 +1,4 @@
-require('dotenv').config({ path: process.env.NODE_ENV === 'production' ? './.env' : '../.env' });
+require('dotenv').config({ path: process.env.NODE_ENV === 'production' ? './.env' : './.env' });
 const express = require('express');
 const path = require('path');
 const OpenAI = require('openai');
