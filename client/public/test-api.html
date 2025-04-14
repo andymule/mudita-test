@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .result {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>API Test</h1>
+  <div>
+    <h2>Test /api/plan endpoint</h2>
+    <button id="testApi">Test API</button>
+    <div id="result" class="result">Results will appear here...</div>
+  </div>
+
+  <script>
+    document.getElementById('testApi').addEventListener('click', async () => {
+      const resultEl = document.getElementById('result');
+      resultEl.innerHTML = 'Testing API...';
+      
+      try {
+        // Use direct URL to avoid proxy issues
+        const apiUrl = 'http://localhost:5001/api/plan';
+        console.log('Testing API at:', apiUrl);
+        
+        const sampleTasks = [
+          'Go for a 20 minute run',
+          'Prepare for meeting with Jessica',
+          'Mow the lawn',
+          'Help daughter with science project'
+        ];
+        
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ tasks: sampleTasks }),
+        });
+        
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        resultEl.innerHTML = `
+          <h3>API Response:</h3>
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+        `;
+      } catch (error) {
+        console.error('API test error:', error);
+        resultEl.innerHTML = `
+          <h3>Error:</h3>
+          <pre>${error.toString()}</pre>
+        `;
+      }
+    });
+  </script>
+</body>
+</html> 
